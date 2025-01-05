@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import insert, select
 from app.database import async_session_maker
 
 class BaseDAO:
@@ -27,3 +27,10 @@ class BaseDAO:
             return result.scalars().all() # НЕ Можно использовать вместо scalars().all() - mappings().all()!
                                           # Если исп-ть его, то нам нужно будет в router.py указать
                                           # ... -> list[dict[str, SBooking]]
+                                          
+    @classmethod    
+    async def add(cls, **data):
+        async with async_session_maker() as session:
+            query = insert(cls.model).values(**data)
+            await session.execute(query)
+            await session.commit()
