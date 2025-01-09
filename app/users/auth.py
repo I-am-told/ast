@@ -4,6 +4,7 @@ from argon2 import PasswordHasher
 from jose import jwt
 from pydantic import EmailStr
 from app.users.dao import UsersDAO
+from app.config import settings
 
 
 ph = PasswordHasher()
@@ -27,7 +28,7 @@ def create_access_token(data: dict) -> str:
     expire = datetime.now(tz=timezone.utc) + timedelta(minutes=30)
     to_encode.update({'exp': expire})
     encoded_jwt = jwt.encode(
-        to_encode, 'aweilrghbewouibds', 'HS256'
+        to_encode, settings.SECRET_KEY, settings.ALGORITHM
     )
     return encoded_jwt
 
