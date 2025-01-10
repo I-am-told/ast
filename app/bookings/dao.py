@@ -3,7 +3,7 @@ from datetime import date
 from sqlalchemy import select, delete, insert, func, and_, or_
 from app.bookings.models import Bookings
 from app.dao.base import BaseDAO
-from app.rooms.models import Rooms
+from app.hotels.rooms.models import Rooms
 from app.database import engine, async_session_maker
 
 
